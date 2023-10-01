@@ -1,8 +1,8 @@
 <template>
-  <el-card class="box-card" shadow="hover">
+  <el-card class="box-card" @click="goDetail" shadow="hover">
     <div class="content">
       <div class="left">
-        <div class="hospital_name">北京医院</div>
+        <div class="hospital_name">{{ hospitalInfo.hosname }}</div>
         <div class="tip">
           <div class="level">
             <svg
@@ -21,7 +21,7 @@
                 p-id="4014"
               ></path>
             </svg>
-            <span> 三级甲等</span>
+            <span>{{ hospitalInfo.param.hostypeString }}</span>
           </div>
           <div class="time">
             <svg
@@ -45,18 +45,32 @@
                 p-id="6041"
               ></path>
             </svg>
-            <span>2023</span>
+            <!-- ？空数据 -->
+            <span>每天{{ hospitalInfo.bookingRule?.releaseTime }}</span>
           </div>
         </div>
       </div>
       <div class="right">
-        <img src="../../../assets/images/logo.png" alt="" />
+        <img :src="`data:image/jpeg;base64,${hospitalInfo.logoData}`" alt="" />
       </div>
     </div>
   </el-card>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+let $router = useRouter();
+
+const goDetail = () => {
+  $router.push({
+    path: "/hospital/register",
+    query: { hoscode: props.hospitalInfo.hoscode },
+  });
+};
+
+let props = defineProps(["hospitalInfo"]);
+</script>
 
 <style scoped lang="scss">
 .box-card {

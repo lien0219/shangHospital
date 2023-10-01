@@ -7,10 +7,16 @@
       <router-view></router-view>
     </div>
     <HospitalBottom></HospitalBottom>
+    <!-- 登录组件 -->
+    <Login v-if="userStore.visiable"></Login>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useUserStore from "@/store/modules/user";
+
+let userStore = useUserStore();
+</script>
 
 <style scoped lang="scss">
 .container {

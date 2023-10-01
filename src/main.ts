@@ -5,11 +5,14 @@ import "@/style/reset.scss";
 import HospitalTop from "@/components/hospital_top/index.vue";
 //底部全局组件
 import HospitalBottom from "@/components/hospital_bottom/index.vue";
+import Login from "@/components/login/index.vue";
 import router from "./router";
 // UI
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+// store
+import pinia from "@/store";
 
 const app = createApp(App);
 app.use(ElementPlus, {
@@ -17,7 +20,9 @@ app.use(ElementPlus, {
 });
 app.component("HospitalTop", HospitalTop);
 app.component("HospitalBottom", HospitalBottom);
+app.component("Login", Login);
 app.use(router);
 app.use(ElementPlus);
+app.use(pinia);
 
 app.mount("#app");

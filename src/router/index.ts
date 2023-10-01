@@ -12,6 +12,32 @@ export default createRouter({
       path: "/hospital",
       component: () => import("@/pages/hospital/index.vue"),
       name: "hospital",
+      children: [
+        {
+          path: "register",
+          component: () => import("@/pages/hospital/register/index.vue"),
+          name: "register",
+        },
+        {
+          path: "detail",
+          component: () => import("@/pages/hospital/detail/index.vue"),
+          name: "detail",
+        },
+        {
+          path: "notice",
+          component: () => import("@/pages/hospital/notice/index.vue"),
+          name: "notice",
+        },
+        {
+          path: "close",
+          component: () => import("@/pages/hospital/close/index.vue"),
+          name: "close",
+        },
+        {
+          path: "search",
+          component: () => import("@/pages/hospital/search/index.vue"),
+        },
+      ],
     },
     {
       path: "/",
