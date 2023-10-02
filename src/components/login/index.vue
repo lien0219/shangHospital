@@ -67,7 +67,29 @@
                 </svg>
               </div>
             </div>
-            <div v-show="scene == 1" class="webchat">微信扫码登录</div>
+            <div v-show="scene == 1" class="webchat">
+              <!-- 二维码 -->
+              <div id="login_container"></div>
+              <div class="phone" @click="handler">
+                <p>手机短信验证码登录</p>
+                <svg
+                  t="1696271197836"
+                  class="icon"
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1527"
+                  width="16"
+                  height="16"
+                >
+                  <path
+                    d="M820.409449 797.228346q0 25.19685-10.07874 46.866142t-27.716535 38.299213-41.322835 26.204724-50.897638 9.574803l-357.795276 0q-27.212598 0-50.897638-9.574803t-41.322835-26.204724-27.716535-38.299213-10.07874-46.866142l0-675.275591q0-25.19685 10.07874-47.370079t27.716535-38.80315 41.322835-26.204724 50.897638-9.574803l357.795276 0q27.212598 0 50.897638 9.574803t41.322835 26.204724 27.716535 38.80315 10.07874 47.370079l0 675.275591zM738.771654 170.330709l-455.559055 0 0 577.511811 455.559055 0 0-577.511811zM510.992126 776.062992q-21.165354 0-36.787402 15.11811t-15.622047 37.291339q0 21.165354 15.622047 36.787402t36.787402 15.622047q22.173228 0 37.291339-15.622047t15.11811-36.787402q0-22.173228-15.11811-37.291339t-37.291339-15.11811zM591.622047 84.661417q0-8.062992-5.03937-12.598425t-11.086614-4.535433l-128 0q-5.03937 0-10.582677 4.535433t-5.543307 12.598425 5.03937 12.598425 11.086614 4.535433l128 0q6.047244 0 11.086614-4.535433t5.03937-12.598425z"
+                    p-id="1528"
+                    fill="#d81e06"
+                  ></path>
+                </svg>
+              </div>
+            </div>
           </div>
         </el-col>
         <el-col :span="12">
@@ -137,9 +159,11 @@
 <script setup lang="ts">
 import useUserStore from "@/store/modules/user";
 import { User, Lock } from "@element-plus/icons-vue";
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import CountDown from "../countdown/index.vue";
 import { ElMessage } from "element-plus";
+import { reqWxLogin } from "@/api/hospital";
+import type { WXLoginResponseData } from "@/api/hospital/type";
 
 let userStore = useUserStore();
 
@@ -162,9 +186,24 @@ let isPhone = computed(() => {
   //返回布尔值:真代表手机号码、假代表的不是手机号码
   return reg.test(loginParam.phone);
 });
-
-const changeScene = () => {
+// 扫码登录
+const changeScene = async () => {
   scene.value = 1;
+  // encodeURIComponent编码 参数
+  let redirect_URL = encodeURIComponent(window.location.origin + "/wxlogin");
+  let result: WXLoginResponseData = await reqWxLogin(redirect_URL);
+  // 生成二维码
+  // @ts-ignore
+  var obj = new WxLogin({
+    self_redirect: true, //true：手机点击确认登录后可以在 iframe 内跳转到 redirect_uri
+    id: "login_container", //显示二维码的容器id
+    appid: result.data.appid, //唯一标识，在微信开放平台提交应用审核通过后获得
+    scope: "snsapi_login", //应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login即可
+    redirect_uri: result.data.redirectUri, //授权回调域路径
+    state: result.data.state, //重定向地址，保持请求和回调的状态，授权请求后原样带回给第三方
+    style: "black", //文字颜色
+    href: "", //自定义样式链接，第三方可根据实际需求覆盖默认样式
+  });
 };
 // 获取验证码
 const getCode = async () => {
@@ -235,6 +274,19 @@ const closeDialog = () => {
   // Object.assign(loginParam, { phone: "", code: "" });
   // form.value.resetFields();
 };
+
+const handler = () => {
+  scene.value = 0;
+};
+// 监听场景
+watch(
+  () => scene.value,
+  (val: number) => {
+    if (val == 1) {
+      userStore.queryState();
+    }
+  }
+);
 </script>
 <script lang="ts">
 export default {
@@ -256,6 +308,20 @@ export default {
         align-items: center;
         p {
           margin: 10px 0px;
+        }
+      }
+      .webchat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .phone {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+          p {
+            margin: 10px 0px;
+          }
         }
       }
     }

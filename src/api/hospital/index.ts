@@ -4,6 +4,7 @@ import type {
   DeparmentResponseData,
   LoginData,
   UserLoginResponseData,
+  WXLoginResponseData,
 } from "./type";
 
 enum API {
@@ -15,6 +16,8 @@ enum API {
   GETUSERCODE_URL = "/sms/send/", //{phone}
   // 登录
   USERLOGIN_URL = "/user/login",
+  // 微信扫码登录
+  WXLOGIN_URL = "/user/weixin/getLoginParam/",
 }
 
 export const reqHospitalDetail = (hoscode: string) =>
@@ -28,3 +31,8 @@ export const reqCode = (phone: string) =>
 
 export const reqUserLogin = (data: LoginData) =>
   request.post<any, UserLoginResponseData>(API.USERLOGIN_URL, data);
+
+export const reqWxLogin = (wxRedirectUri: string) =>
+  request.get<any, WXLoginResponseData>(
+    API.WXLOGIN_URL + `?wxRedirectUri=${wxRedirectUri}`
+  );

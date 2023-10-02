@@ -117,3 +117,15 @@ export interface UserInfo {
 export interface UserLoginResponseData extends ResponseData {
   data: UserInfo;
 }
+
+// 微信扫码数据返回类型
+export interface WXLogin {
+  redirectUri: string;
+  appid: string;
+  scope: string;
+  state: string;
+}
+
+export interface WXLoginResponseData extends ResponseData {
+  data: WXLogin;
+}
