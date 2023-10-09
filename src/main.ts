@@ -6,6 +6,7 @@ import HospitalTop from "@/components/hospital_top/index.vue";
 //底部全局组件
 import HospitalBottom from "@/components/hospital_bottom/index.vue";
 import Login from "@/components/login/index.vue";
+import Visitor from "@/components/visitor/index.vue";
 import router from "./router";
 // UI
 import ElementPlus from "element-plus";
@@ -21,6 +22,7 @@ app.use(ElementPlus, {
 app.component("HospitalTop", HospitalTop);
 app.component("HospitalBottom", HospitalBottom);
 app.component("Login", Login);
+app.component("Visitor", Visitor);
 app.use(router);
 app.use(ElementPlus);
 app.use(pinia);

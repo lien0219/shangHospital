@@ -91,7 +91,7 @@
           <!-- 小科室 -->
           <ul>
             <li
-              @click="showLogin"
+              @click="showLogin(item)"
               v-for="item in deparment.children"
               :key="item.depcode"
             >
@@ -106,11 +106,13 @@
 
 <script setup lang="ts">
 import useDetailStore from "@/store/modules/hospitalDetail";
-import useUserStore from "@/store/modules/user";
-
+// import useUserStore from "@/store/modules/user";
+import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 
-let userStore = useUserStore();
+// let userStore = useUserStore();
+let $router = useRouter();
+let $route = useRoute();
 
 let hospitalStore = useDetailStore();
 
@@ -127,8 +129,12 @@ const changeIndex = (index: number) => {
   });
 };
 
-const showLogin = () => {
-  userStore.visiable = true;
+const showLogin = (item: any) => {
+  // userStore.visiable = true;
+  $router.push({
+    path: "/hospital/register_step",
+    query: { hoscode: $route.query.hoscode, depcode: item.depcode },
+  });
 };
 </script>
 

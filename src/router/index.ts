@@ -37,6 +37,15 @@ export default createRouter({
           path: "search",
           component: () => import("@/pages/hospital/search/index.vue"),
         },
+        {
+          path: "register_step",
+          component: () =>
+            import("@/pages/hospital/register/register_step.vue"),
+        },
+        {
+          path: "register_num",
+          component: () => import("@/pages/hospital/register/register_num.vue"),
+        },
       ],
     },
     {
@@ -46,6 +55,32 @@ export default createRouter({
     {
       path: "/",
       redirect: "/home",
+    },
+    {
+      path: "/user",
+      component: () => import("@/pages/user/index.vue"),
+      children: [
+        {
+          path: "certification",
+          component: () => import("@/pages/user/certification/index.vue"),
+        },
+        {
+          path: "order",
+          component: () => import("@/pages/user/order/index.vue"),
+        },
+        {
+          path: "patient",
+          component: () => import("@/pages/user/patient/index.vue"),
+        },
+        {
+          path: "profile",
+          component: () => import("@/pages/user/profile/index.vue"),
+        },
+        {
+          path: "feedback",
+          component: () => import("@/pages/user/feedback/index.vue"),
+        },
+      ],
     },
   ],
   //   滚动行为

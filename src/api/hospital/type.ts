@@ -129,3 +129,108 @@ export interface WXLogin {
 export interface WXLoginResponseData extends ResponseData {
   data: WXLogin;
 }
+
+// 科室预约挂号返回数据
+export interface BaseMap {
+  workDateString: string;
+  releaseTime: string;
+  bigname: string;
+  stopTime: string;
+  depname: string;
+  hosname: string;
+}
+
+export interface WorkData {
+  workDate: string;
+  workDateMd: string;
+  dayOfWeek: string;
+  docCount: number;
+  reservedNumber: null;
+  availableNumber: number;
+  status: number;
+}
+
+export type BookingScheduleList = WorkData[];
+
+export interface HospitalWordData extends ResponseData {
+  data: {
+    total: number;
+    bookingScheduleList: BookingScheduleList;
+    baseMap: BaseMap;
+  };
+}
+
+// 医生排班数据
+export interface Doctor {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  isDeleted: string;
+  param: {
+    dayOfWeek: string;
+    depname: string;
+    hosname: string;
+  };
+  hoscode: string;
+  depcode: string;
+  title: string;
+  docname: string;
+  skill: string;
+  workDate: string;
+  workTime: number;
+  reservedNumber: number;
+  availableNumber: number;
+  amount: number;
+  status: number;
+  hosScheduleId: string;
+}
+
+export type DocArr = Doctor[];
+
+export interface DoctorResponseData extends ResponseData {
+  data: DocArr;
+}
+
+//就诊人数据ts类型
+export interface User {
+  id: number;
+  createTime: string;
+  updateTime: string;
+  isDeleted: number;
+  param: {
+    certificatesTypeString: string;
+    contactsCertificatesTypeString: string;
+    cityString: null;
+    fullAddress: string;
+    districtString: null;
+    provinceString: null;
+  };
+  userId: number;
+  name: number;
+  certificatesType: string;
+  certificatesNo: string;
+  sex: number;
+  birthdate: string;
+  phone: string;
+  isMarry: number;
+  provinceCode: null;
+  cityCode: null;
+  districtCode: null;
+  address: string;
+  contactsName: string;
+  contactsCertificatesType: string;
+  contactsCertificatesNo: string;
+  contactsPhone: string;
+  isInsure: number;
+  cardNo: null;
+  status: string;
+}
+export type UserArr = User[];
+export interface UserResponseData extends ResponseData {
+  data: UserArr;
+}
+
+// 医生挂号数据信息
+export interface DoctorInfoData extends ResponseData {
+  data: Doctor;
+}
