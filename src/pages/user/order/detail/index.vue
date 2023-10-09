@@ -206,7 +206,7 @@ import {
   reqQrcode,
   reqQueryPayState,
 } from "@/api/user";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import type { PayReslt, OrderResponseData, QrCode } from "@/api/user/type";
 //@ts-ignore
 import { ElMessage } from "element-plus";
@@ -214,6 +214,7 @@ import { ElMessage } from "element-plus";
 //@ts-ignore
 import QRCode from "qrcode";
 let $route = useRoute();
+let $router = useRouter();
 //定义存储二维码图片路径
 let imgUrl = ref<string>("");
 //控制对话框显示与隐藏的数据
@@ -241,6 +242,7 @@ const cancel = async () => {
     await reqCancelOrder($route.query.orderId as string);
     //再次获取订单详情的数据
     getOrderInfo();
+    $router.back();
   } catch (error) {
     ElMessage({
       type: "error",
