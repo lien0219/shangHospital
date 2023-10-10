@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export interface ResponseData {
   code: number;
   message: string;

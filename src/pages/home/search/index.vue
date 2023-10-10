@@ -17,7 +17,7 @@
 import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import { reqHospitalInfo } from "@/api/home";
-import type { HospitalInfo, Content } from "@/api/home/type";
+import type { HospitalInfo } from "@/api/home/type";
 import { useRouter } from "vue-router";
 
 let $router = useRouter();

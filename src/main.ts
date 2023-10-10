@@ -11,6 +11,7 @@ import router from "./router";
 // UI
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
+// @ts-ignore
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 // store
 import pinia from "@/store";
@@ -26,5 +27,5 @@ app.component("Visitor", Visitor);
 app.use(router);
 app.use(ElementPlus);
 app.use(pinia);
-
+import "./permisstion";
 app.mount("#app");

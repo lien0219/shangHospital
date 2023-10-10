@@ -73,12 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from "@element-plus/icons-vue";
+import { Document, Menu as IconMenu, Setting } from "@element-plus/icons-vue";
 import { useRouter, useRoute } from "vue-router";
 
 let $router = useRouter();

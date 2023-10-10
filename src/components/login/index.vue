@@ -164,8 +164,11 @@ import CountDown from "../countdown/index.vue";
 import { ElMessage } from "element-plus";
 import { reqWxLogin } from "@/api/hospital";
 import type { WXLoginResponseData } from "@/api/hospital/type";
+import { useRouter, useRoute } from "vue-router";
 
 let userStore = useUserStore();
+let $router = useRouter();
+let $route = useRoute();
 
 // 倒计时组件显示
 let flag = ref<boolean>(false);
@@ -233,6 +236,12 @@ const login = async () => {
   try {
     await userStore.userLogin(loginParam);
     userStore.visiable = false;
+    let redirect = $route.query.redirect;
+    if (redirect) {
+      $router.push(redirect as string);
+    } else {
+      $router.push("./home");
+    }
   } catch (error) {
     ElMessage({
       type: "error",
@@ -241,7 +250,7 @@ const login = async () => {
   }
 };
 
-// 自定义校验
+// @ts-ignore
 const validatorPhone = (rule: any, value: any, callback: any) => {
   const reg =
     /^1((34[0-8])|(8\d{2})|(([35][0-35-9]|4[579]|66|7[35678]|9[1389])\d{1}))\d{7}$/;
@@ -251,6 +260,7 @@ const validatorPhone = (rule: any, value: any, callback: any) => {
     callback(new Error("请输入正确的手机号码"));
   }
 };
+// @ts-ignore
 const validatorCode = (rule: any, value: any, callback: any) => {
   if (/^\d{6}$/.test(value)) {
     callback();

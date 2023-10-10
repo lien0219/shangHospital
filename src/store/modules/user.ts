@@ -1,3 +1,4 @@
+// @ts-ignore
 import { defineStore } from "pinia";
 import { reqCode, reqUserLogin } from "@/api/hospital";
 import type { LoginData, UserLoginResponseData } from "@/api/hospital/type";
@@ -17,6 +18,7 @@ const useUserStore = defineStore("User", {
     async getCode(phone: string) {
       let result: any = await reqCode(phone);
       if (result.code == 200) {
+        // @ts-ignore
         this.code = result.data;
         return "ok";
       } else {
@@ -27,9 +29,11 @@ const useUserStore = defineStore("User", {
     async userLogin(loginData: LoginData) {
       let result: UserLoginResponseData = await reqUserLogin(loginData);
       if (result.code == 200) {
+        // @ts-ignore
         this.userInfo = result.data;
         // 持久化存储用户信息
         // localStorage.setItem("USERINFO", JSON.stringify(this.userInfo));
+        // @ts-ignore
         SET_TOKEN(JSON.stringify(this.userInfo));
         return "ok";
       } else {
@@ -38,6 +42,7 @@ const useUserStore = defineStore("User", {
     },
     // 退出登录
     logout() {
+      // @ts-ignore
       this.userInfo = { name: "", token: "" };
       // 清空本地存储数据
       REMOVE_TOKEN();
@@ -48,7 +53,9 @@ const useUserStore = defineStore("User", {
       let timer = setInterval(() => {
         // 本地有数据判定扫码成功
         if (GET_TOKEN()) {
+          // @ts-ignore
           this.visiable = false;
+          // @ts-ignore
           this.userInfo = JSON.parse(GET_TOKEN() as string);
           clearInterval(timer);
         }

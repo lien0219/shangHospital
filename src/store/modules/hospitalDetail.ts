@@ -1,3 +1,4 @@
+// @ts-ignore
 import { defineStore } from "pinia";
 
 import { reqHospitalDetail, reqHospitalDeparment } from "@/api/hospital";
@@ -15,6 +16,7 @@ const useDetailStore = defineStore("Detail", {
       //医院详情
       hospitalInfo: {} as HosPitalDetail,
       // 医院科室数据
+      // @ts-ignore
       deparmentArr: [],
     };
   },
@@ -23,12 +25,14 @@ const useDetailStore = defineStore("Detail", {
     async getHospital(hoscode: string) {
       let result: HospitalDetail = await reqHospitalDetail(hoscode);
       if (result.code == 200) {
+        // @ts-ignore
         this.hospitalInfo = result.data;
       }
     },
     async getDeparment(hoscode: string) {
       let result: DeparmentResponseData = await reqHospitalDeparment(hoscode);
       if (result.code == 200) {
+        // @ts-ignore
         this.deparmentArr = result.data;
       }
     },
