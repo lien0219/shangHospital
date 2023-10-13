@@ -6,8 +6,7 @@ import type { HosPitalDetail } from "@/api/hospital/type";
 import type {
   HospitalDetail,
   DeparmentResponseData,
-  DeparmentArr,
-} from "@/api/hospital/type";
+} from "@/api/hospital/type"; //  DeparmentArr,
 import type { DetailState } from "./interface";
 
 const useDetailStore = defineStore("Detail", {
